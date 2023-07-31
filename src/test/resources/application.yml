@@ -1,0 +1,10 @@
+protocolsn:
+  plugin:
+    id: testPlugin
+    secret: testSecret
+    roles:
+      - role1
+      - role2
+    name: Test Plugin
+  node-manager:
+    baseUri: http://localhost:8888

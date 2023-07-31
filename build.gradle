@@ -1,25 +1,50 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.2'
+	id 'java-library'
+	id 'org.springframework.boot' version '3.1.2' apply false
 	id 'io.spring.dependency-management' version '1.1.2'
+	id 'maven-publish'
 }
 
-group = 'coop.protocolSN.spikes.dbMigration.flyway'
-version = '0.0.1-SNAPSHOT'
+group = 'coop.protocolSN'
+version = '0.0.2'
 
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = '20'
 }
 
 repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.boot:spring-boot-dependencies:3.1.1")
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.liquibase:liquibase-core'
+
+	//Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//security
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
+	//networking
+	implementation "org.springframework:spring-webflux"
+//	implementation "org.springframework.boot:spring-boot-starter-webflux"
+
+	//boot config
+	annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	//tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:junit-jupiter'
 }
 
 tasks.named('test') {
