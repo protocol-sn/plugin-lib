@@ -3,7 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-//name "ProtocolSNPluginLib"
 version "0.0.1"
 group "coop.stlma.tech.protocolsn"
 
