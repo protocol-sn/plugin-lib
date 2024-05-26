@@ -1,9 +1,10 @@
 plugins {
     id 'io.micronaut.library' version '4.4.0'
+    id 'maven-publish'
 }
 
 version "0.0.1"
-group "coop.stlma.tech.protocolsn.pluginlib"
+group "coop.stlma.tech.protocolsn"
 
 repositories {
     mavenCentral()
@@ -24,3 +25,16 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = "ProtocolSNPluginLib"
+            version = project.version
+
+            from components.java
+        }
+    }
+}
+
