@@ -28,6 +28,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     public RegistrationServiceImpl(@Client("node-manager") HttpClient nodeManagerClient,
                                    @Value("${coop.stlma.tech.protocolsn.node-manager.registration.url:/plugin-registration}") String registration) {
+        log.debug("Setting up registration at {}", registration);
         this.nodeManagerClient = nodeManagerClient;
         this.registrationUrl = registration;
     }
@@ -39,6 +40,7 @@ public class RegistrationServiceImpl implements RegistrationService {
      */
     @Override
     public Mono<PluginRegistration> register(PluginRegistration pluginRegistration) {
+        log.debug("Registering plugin {}", pluginRegistration.getPluginName());
         HttpRequest<PluginRegistration> request = HttpRequest.POST(registrationUrl, pluginRegistration);
         return Mono.from(nodeManagerClient.exchange(request, PluginRegistration.class))
                 .map(response -> response.getBody(PluginRegistration.class)

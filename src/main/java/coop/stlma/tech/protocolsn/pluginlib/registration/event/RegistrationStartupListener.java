@@ -37,7 +37,7 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
 
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
-        log.trace("Registering plugin {} on {}", pluginName, pluginHost);
+        log.debug("Registering plugin {} on {}", pluginName, pluginHost);
         registrationService.register(new PluginRegistration(null, pluginName, pluginHost)).block();
     }
 }
