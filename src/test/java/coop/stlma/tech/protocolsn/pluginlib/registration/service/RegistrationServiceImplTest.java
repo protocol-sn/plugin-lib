@@ -1,6 +1,7 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
-import coop.stlma.tech.protocolsn.pluginlib.registration.domain.PluginRegistration;
+import coop.stlma.tech.protocolsn.registration.api.RegistrationClient;
+import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
@@ -26,13 +27,13 @@ class RegistrationServiceImplTest implements TestPropertyProvider {
     RegistrationServiceImpl registrationService;
 
     @MockBean
-    @Replaces(DefaultHttpClient.class)
-    HttpClient mockClient = Mockito.mock(HttpClient.class);
+    @Replaces(RegistrationClient.class)
+    RegistrationClient mockClient = Mockito.mock(RegistrationClient.class);
 
 
     @Test
     void testRegister_happyPath() {
-        Mockito.when(mockClient.exchange(Mockito.any(HttpRequest.class), Mockito.eq(PluginRegistration.class)))
+        Mockito.when(mockClient.registerPlugin(Mockito.any(PluginRegistration.class)))
                 .thenReturn(Mono.just(HttpResponse.ok(
                         new PluginRegistration(UUID.nameUUIDFromBytes("test".getBytes()),
                                 "test",
