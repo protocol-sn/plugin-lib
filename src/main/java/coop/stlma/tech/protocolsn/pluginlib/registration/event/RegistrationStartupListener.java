@@ -1,7 +1,7 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.event;
 
-import coop.stlma.tech.protocolsn.pluginlib.registration.domain.PluginRegistration;
 import coop.stlma.tech.protocolsn.pluginlib.registration.service.RegistrationService;
+import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.context.event.ApplicationEventListener;

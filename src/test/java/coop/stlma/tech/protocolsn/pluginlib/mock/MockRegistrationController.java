@@ -1,6 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib.mock;
 
-import coop.stlma.tech.protocolsn.pluginlib.registration.domain.PluginRegistration;
+import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;

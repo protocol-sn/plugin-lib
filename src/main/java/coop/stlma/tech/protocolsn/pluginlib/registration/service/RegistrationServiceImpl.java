@@ -1,11 +1,10 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
-import coop.stlma.tech.protocolsn.pluginlib.registration.domain.PluginRegistration;
 import coop.stlma.tech.protocolsn.pluginlib.registration.error.PluginRegistrationException;
+import coop.stlma.tech.protocolsn.registration.api.RegistrationClient;
+import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.client.HttpClient;
-import io.micronaut.http.client.annotation.Client;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -23,13 +22,13 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class RegistrationServiceImpl implements RegistrationService {
 
-    private final HttpClient nodeManagerClient;
+    private final RegistrationClient registrationClient;
     private final String registrationUrl;
 
-    public RegistrationServiceImpl(@Client("node-manager") HttpClient nodeManagerClient,
+    public RegistrationServiceImpl(RegistrationClient registrationClient,
                                    @Value("${coop.stlma.tech.protocolsn.node-manager.registration.url:/plugin-registration}") String registration) {
+        this.registrationClient = registrationClient;
         log.debug("Setting up registration at {}", registration);
-        this.nodeManagerClient = nodeManagerClient;
         this.registrationUrl = registration;
     }
 
@@ -42,8 +41,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     public Mono<PluginRegistration> register(PluginRegistration pluginRegistration) {
         log.debug("Registering plugin {}", pluginRegistration.getPluginName());
         HttpRequest<PluginRegistration> request = HttpRequest.POST(registrationUrl, pluginRegistration);
-        return Mono.from(nodeManagerClient.exchange(request, PluginRegistration.class))
-                .map(response -> response.getBody(PluginRegistration.class)
-                        .orElseThrow(() -> new PluginRegistrationException("Failed to register plugin.")));
+        return Mono.from(registrationClient.registerPlugin(pluginRegistration))
+                .map(response -> response.getBody(PluginRegistration.class))
+                .map(body -> body.orElseThrow(() -> new PluginRegistrationException("Failed to register plugin.")));
     }
 }
