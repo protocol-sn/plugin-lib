@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-version "0.1.0"
+version "0.1.1"
 group "coop.stlma.tech.protocolsn"
 
 repositories {
@@ -24,6 +24,11 @@ dependencies {
 
     //reactor
     implementation("io.micronaut.reactor:micronaut-reactor")
+
+    //security
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.security:micronaut-security-jwt")
 
     //lombok
     annotationProcessor("org.projectlombok:lombok")
