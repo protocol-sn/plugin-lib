@@ -1,0 +1,79 @@
+plugins {
+    id 'io.micronaut.library' version '4.4.0'
+    id 'maven-publish'
+}
+
+version "0.1.3"
+group "coop.stlma.tech.protocolsn"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+micronaut {
+    version = "4.4.2"
+}
+
+dependencies {
+    //db
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    runtimeOnly("org.postgresql:postgresql")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql")
+
+    //serde
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    //web
+    implementation("io.micronaut:micronaut-http-client")
+
+    //reactor
+    implementation("io.micronaut.reactor:micronaut-reactor")
+
+    //protocol-sn
+    implementation("coop.stlma.tech.protocolsn:node-manager-api:0.1.2")
+    implementation project(":plugin-lib-api")
+
+    //security
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+
+    //lombok
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    //swagger
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    implementation("io.micronaut.openapi:micronaut-openapi-annotations")
+
+    //test
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    testImplementation("org.mockito:mockito-core")
+}
+
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = "plugin-lib"
+            version = project.version
+
+            from components.java
+        }
+    }
+}
+
