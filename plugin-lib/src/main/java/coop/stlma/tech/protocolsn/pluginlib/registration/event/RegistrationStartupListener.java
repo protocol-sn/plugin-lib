@@ -43,7 +43,7 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
     public void onApplicationEvent(ApplicationStartupEvent event) {
         log.debug("Registering plugin {} on {}", pluginName, pluginHost);
         registrationService.register(new PluginRegistration(null,
-                pluginName, pluginHost, healthConfigurationProperties.isEnabled() ? healthConfigurationProperties.getUrl() : null,
+                pluginName, pluginHost, healthConfigurationProperties.isEnabled() ? healthConfigurationProperties.getEndpoint() : null,
                 null, null, null, null))
                 .block();
     }

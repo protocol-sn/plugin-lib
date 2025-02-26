@@ -4,6 +4,11 @@ import coop.stlma.tech.protocolsn.health.model.HealthResponse;
 import coop.stlma.tech.protocolsn.health.model.HealthStatus;
 import org.reactivestreams.Publisher;
 
+/**
+ * Service to indicate the current health of the plugin.
+ *
+ * @author John Meyerin
+ */
 public interface HealthService {
 
     Publisher<HealthResponse> getPluginHealth();

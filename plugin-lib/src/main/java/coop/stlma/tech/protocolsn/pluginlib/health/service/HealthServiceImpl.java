@@ -10,7 +10,7 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 /**
- * Service to indicate the current health of the plugin.
+ * Default implementation of the {@link HealthService}
  *
  * @author John Meyerin
  */
