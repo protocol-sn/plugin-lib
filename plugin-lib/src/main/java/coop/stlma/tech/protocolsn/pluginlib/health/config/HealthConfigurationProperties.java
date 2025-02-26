@@ -6,12 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Properties related to the health checks for the plugin
+ *
+ * @author John Meyerin
+ */
 @Setter
 @Getter
 @NoArgsConstructor
 @ConfigurationProperties("coop.stlma.tech.protocolsn.health-check")
 public class HealthConfigurationProperties {
 
-    private String url = HealthOperations.HEALTH_ENDPOINT;
+    /**
+     * The endpoint at which the health check can be found
+     */
+    private String endpoint = HealthOperations.HEALTH_ENDPOINT;
+
+    /**
+     * Does this plugin support health checks?
+     */
     private boolean enabled = true;
 }

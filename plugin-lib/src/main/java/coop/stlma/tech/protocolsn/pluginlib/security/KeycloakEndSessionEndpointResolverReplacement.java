@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 /**
  * Override default session end behavior to be compatible with Keycloak.
  */
-
 @Singleton
 @Replaces(EndSessionEndpointResolver.class)
 @Requires(property = "coop.stlma.tech.protocolsn.security", value = "keycloak", defaultValue = "keycloak")

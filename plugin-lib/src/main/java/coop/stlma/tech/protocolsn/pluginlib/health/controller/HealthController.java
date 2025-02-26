@@ -12,6 +12,11 @@ import jakarta.annotation.security.RolesAllowed;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
+/**
+ * Controller for health checks
+ *
+ * @author John Meyerin
+ */
 @Controller
 @Requires(bean = HealthService.class)
 public class HealthController implements HealthOperations {
