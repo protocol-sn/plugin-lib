@@ -23,13 +23,9 @@ import reactor.core.publisher.Mono;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final RegistrationClient registrationClient;
-    private final String registrationUrl;
 
-    public RegistrationServiceImpl(RegistrationClient registrationClient,
-                                   @Value("${coop.stlma.tech.protocolsn.node-manager.registration.url:/plugin-registration}") String registration) {
+    public RegistrationServiceImpl(RegistrationClient registrationClient) {
         this.registrationClient = registrationClient;
-        log.debug("Setting up registration at {}", registration);
-        this.registrationUrl = registration;
     }
 
     /**
@@ -40,7 +36,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public Mono<PluginRegistration> register(PluginRegistration pluginRegistration) {
         log.debug("Registering plugin {}", pluginRegistration.getPluginName());
-        HttpRequest<PluginRegistration> request = HttpRequest.POST(registrationUrl, pluginRegistration);
         return Mono.from(registrationClient.registerPlugin(pluginRegistration))
                 .map(response -> response.getBody(PluginRegistration.class))
                 .map(body -> body.orElseThrow(() -> new PluginRegistrationException("Failed to register plugin.")));

@@ -17,6 +17,8 @@ import java.util.function.Supplier;
 
 /**
  * Override default session end behavior to be compatible with Keycloak.
+ *
+ * @author John Meyerin
  */
 @Singleton
 @Replaces(EndSessionEndpointResolver.class)
@@ -37,6 +39,13 @@ public class KeycloakEndSessionEndpointResolverReplacement extends EndSessionEnd
         this.securityConfiguration = securityConfiguration;
     }
 
+    /**
+     * Resolve logging out of keycloak
+     * @param oauthClientConfiguration      config
+     * @param openIdProviderMetadata        oidc meta
+     * @param endSessionCallbackUrlBuilder  url builder
+     * @return
+     */
     @Override
     public Optional<EndSessionEndpoint> resolve(OauthClientConfiguration oauthClientConfiguration,
                                                 Supplier<OpenIdProviderMetadata> openIdProviderMetadata,

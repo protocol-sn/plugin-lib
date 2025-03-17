@@ -20,6 +20,13 @@ import lombok.Setter;
 @Serdeable
 public class HealthResponse {
 
+    /**
+     * Category of health status
+     */
     private HealthStatus healthStatus;
+
+    /**
+     * Human-readable description of health
+     */
     private String description;
 }
