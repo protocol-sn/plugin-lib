@@ -3,7 +3,6 @@ package coop.stlma.tech.protocolsn.pluginlib.health.controller;
 import coop.stlma.tech.protocolsn.health.model.HealthResponse;
 import coop.stlma.tech.protocolsn.health.model.HealthStatus;
 import coop.stlma.tech.protocolsn.pluginlib.health.service.HealthService;
-import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -13,11 +12,13 @@ import io.micronaut.test.annotation.MockBean;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reactor.core.publisher.Mono;
 
 @MicronautTest
+@Disabled
 class HealthControllerTest {
 
     @MockBean

@@ -27,6 +27,11 @@ public class HealthController implements HealthOperations {
         this.healthService = healthService;
     }
 
+    /**
+     * Get this plugin's current health
+     *
+     * @return the current health
+     */
     @Get("${" + HEALTH_CONFIG +":" + HealthOperations.HEALTH_ENDPOINT + "}")
     @RolesAllowed(HEALTH_ROLES)
     @SecurityRequirement(name = "pluginClient")

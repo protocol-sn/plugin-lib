@@ -39,6 +39,10 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
         this.pluginHost = StringUtils.isNotEmpty(pluginHost) ? pluginHost : String.valueOf(embeddedServer.getURL());
     }
 
+    /**
+     * Register a plugin on startup
+     * @param event Startup event
+     */
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
         log.debug("Registering plugin {} on {}", pluginName, pluginHost);
