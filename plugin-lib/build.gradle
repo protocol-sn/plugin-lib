@@ -1,5 +1,5 @@
 plugins {
-    id 'io.micronaut.library' version '4.4.0'
+    id 'io.micronaut.library' version '4.5.0'
     id 'maven-publish'
 }
 
@@ -35,7 +35,7 @@ dependencies {
     implementation("io.micronaut.reactor:micronaut-reactor")
 
     //protocol-sn
-    implementation("coop.stlma.tech.protocolsn:node-manager-api:0.1.2")
+    implementation("coop.stlma.tech.protocolsn:node-manager-api:0.4.0")
     implementation project(":plugin-lib-api")
 
     //security
@@ -61,9 +61,9 @@ dependencies {
 }
 
 // use JUnit 5 platform
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 
 publishing {
     publications {
