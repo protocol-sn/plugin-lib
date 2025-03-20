@@ -61,9 +61,9 @@ dependencies {
 }
 
 // use JUnit 5 platform
-//test {
-//    useJUnitPlatform()
-//}
+test {
+    useJUnitPlatform()
+}
 
 publishing {
     publications {
