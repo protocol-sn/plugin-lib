@@ -38,11 +38,6 @@ dependencies {
     implementation("coop.stlma.tech.protocolsn:node-manager-api:0.1.2")
     implementation project(":plugin-lib-api")
 
-    //security
-    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
-    implementation("io.micronaut.security:micronaut-security-oauth2")
-    implementation("io.micronaut.security:micronaut-security-jwt")
-
     //lombok
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
