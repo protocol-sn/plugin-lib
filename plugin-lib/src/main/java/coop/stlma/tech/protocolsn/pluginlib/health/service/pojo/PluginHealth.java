@@ -1,5 +1,6 @@
-package coop.stlma.tech.protocolsn.health.model;
+package coop.stlma.tech.protocolsn.pluginlib.health.service.pojo;
 
+import coop.stlma.tech.protocolsn.health.model.HealthStatus;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Introspected
 @Serdeable
-public class HealthResponse {
+public class PluginHealth {
 
     /**
      * Category of health status

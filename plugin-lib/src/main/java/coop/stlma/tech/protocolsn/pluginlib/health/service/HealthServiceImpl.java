@@ -1,6 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib.health.service;
 
-import coop.stlma.tech.protocolsn.health.model.HealthResponse;
+import coop.stlma.tech.protocolsn.pluginlib.health.service.pojo.PluginHealth;
 import coop.stlma.tech.protocolsn.health.model.HealthStatus;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
@@ -27,8 +27,8 @@ public class HealthServiceImpl implements HealthService {
      * @return HealthResponse
      */
     @Override
-    public Publisher<HealthResponse> getPluginHealth() {
-        return Mono.just(new HealthResponse(healthStatus, healthDescription));
+    public Publisher<PluginHealth> getPluginHealth() {
+        return Mono.just(new PluginHealth(healthStatus, healthDescription));
     }
 
     /**

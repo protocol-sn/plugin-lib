@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "coop.stlma.tech.protocolsn.pluginlib";
+option java_outer_classname = "HealthOperationsProto";
+option objc_class_prefix = "HLW";
+
+package coop.stlma.tech.protocolsn.pluginlib;
+
+service Health {
+  rpc HealthCheck(Empty) returns (HealthResponse) {}
+}
+
+message Empty {}
+
+message HealthResponse {
+  string description = 1;
+  string healthStatus = 2;
+}

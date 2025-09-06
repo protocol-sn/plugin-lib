@@ -1,10 +1,8 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
+import coop.stlma.tech.protocolsn.nodemanager.registration.api.RegistrationClient;
+import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
 import coop.stlma.tech.protocolsn.pluginlib.registration.error.PluginRegistrationException;
-import coop.stlma.tech.protocolsn.registration.api.RegistrationClient;
-import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
-import io.micronaut.context.annotation.Value;
-import io.micronaut.http.HttpRequest;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;

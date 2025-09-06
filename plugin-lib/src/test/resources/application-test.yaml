@@ -1,0 +1,6 @@
+coop:
+  stlma:
+    tech:
+      protocolsn:
+        registration:
+          on-startup: false

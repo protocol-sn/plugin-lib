@@ -1,8 +1,8 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.event;
 
+import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
 import coop.stlma.tech.protocolsn.pluginlib.health.config.HealthConfigurationProperties;
 import coop.stlma.tech.protocolsn.pluginlib.registration.service.RegistrationService;
-import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.annotation.Value;
 import io.micronaut.context.event.ApplicationEventListener;
@@ -19,24 +19,27 @@ import lombok.extern.slf4j.Slf4j;
  * @author John Meyerin
  */
 @Singleton
-@Requires(property = "coop.stlma.tech.protocolsn.registration.on-startup", value = "true", defaultValue = "true")
+@Requires(property = "coop.stlma.tech.protocolsn.registration.on-startup", value = "true", defaultValue = "true", notEnv = "test")
 @Slf4j
 public class RegistrationStartupListener implements ApplicationEventListener<ApplicationStartupEvent> {
 
     private final RegistrationService registrationService;
     private final String pluginName;
     private final String pluginHost;
+    private final int pluginGrpcPort;
     private final HealthConfigurationProperties healthConfigurationProperties;
 
     public RegistrationStartupListener(RegistrationService registrationService,
-                                       @Value("${coop.stlma.tech.protocolsn.plugin-name}") String pluginName,
+                                       @Value("${coop.stlma.tech.protocolsn.plugin-name:}") String pluginName,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-host:}") String pluginHost,
+                                       @Value("${coop.stlma.tech.protocolsn.plugin-grpc-port:}") String pluginGrpcPort,
                                        EmbeddedServer embeddedServer,
                                        HealthConfigurationProperties healthConfigurationProperties) {
         this.registrationService = registrationService;
         this.pluginName = pluginName;
         this.healthConfigurationProperties = healthConfigurationProperties;
         this.pluginHost = StringUtils.isNotEmpty(pluginHost) ? pluginHost : String.valueOf(embeddedServer.getURL());
+        this.pluginGrpcPort = StringUtils.isDigits(pluginGrpcPort) ? Integer.parseInt(pluginGrpcPort) : 0;
     }
 
     /**
@@ -45,9 +48,9 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
      */
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
-        log.debug("Registering plugin {} on {}", pluginName, pluginHost);
+        log.debug("Registering plugin {} on {} and port {}", pluginName, pluginHost, pluginGrpcPort);
         registrationService.register(new PluginRegistration(null,
-                pluginName, pluginHost, healthConfigurationProperties.isEnabled() ? healthConfigurationProperties.getEndpoint() : null,
+                pluginName, pluginHost, pluginGrpcPort, null,
                 null, null, null, null))
                 .block();
     }

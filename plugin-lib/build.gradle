@@ -1,5 +1,5 @@
 plugins {
-    id 'io.micronaut.library' version '4.4.0'
+    id 'io.micronaut.library' version '4.5.4'
     id 'maven-publish'
 }
 
@@ -16,6 +16,11 @@ micronaut {
 }
 
 dependencies {
+    //grpc
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation("com.google.protobuf:protobuf-java-util:${protobufVersion}")
+    testImplementation("io.micronaut.grpc:micronaut-grpc-server-runtime")
+
     //db
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
@@ -35,7 +40,7 @@ dependencies {
     implementation("io.micronaut.reactor:micronaut-reactor")
 
     //protocol-sn
-    implementation("coop.stlma.tech.protocolsn:node-manager-api:0.1.2")
+    implementation("coop.stlma.tech.protocolsn:node-manager-api:0.5.0")
     implementation project(":plugin-lib-api")
 
     //lombok
@@ -45,6 +50,9 @@ dependencies {
     //swagger
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     implementation("io.micronaut.openapi:micronaut-openapi-annotations")
+
+    //properties
+    runtimeOnly("org.yaml:snakeyaml")
 
     //test
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -71,4 +79,3 @@ publishing {
         }
     }
 }
-
