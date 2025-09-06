@@ -1,6 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
-import coop.stlma.tech.protocolsn.registration.model.PluginRegistration;
+import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.test.support.TestPropertyProvider;
@@ -24,8 +24,8 @@ class RegistrationServiceImplTest implements TestPropertyProvider {
     void testRegister_happyPath() {
 
         PluginRegistration pluginRegistration = new PluginRegistration(UUID.nameUUIDFromBytes("test".getBytes()),
-                "test", "localhost:8081", null, null,
-                null, null, null);
+                "test", "localhost", 8081, null,
+                null, null, null, null);
         PluginRegistration result = registrationService.register(pluginRegistration).block();
         Assertions.assertEquals("test", result.getPluginName());
         Assertions.assertEquals("localhost:8081", result.getPluginLocation());

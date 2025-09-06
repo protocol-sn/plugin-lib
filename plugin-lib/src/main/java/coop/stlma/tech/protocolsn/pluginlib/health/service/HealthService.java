@@ -1,6 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib.health.service;
 
-import coop.stlma.tech.protocolsn.health.model.HealthResponse;
+import coop.stlma.tech.protocolsn.pluginlib.health.service.pojo.PluginHealth;
 import coop.stlma.tech.protocolsn.health.model.HealthStatus;
 import org.reactivestreams.Publisher;
 
@@ -15,7 +15,7 @@ public interface HealthService {
      * Get the current health of the plugin
      * @return  The current health of the plugin
      */
-    Publisher<HealthResponse> getPluginHealth();
+    Publisher<PluginHealth> getPluginHealth();
 
     /**
      * Set the current health of the plugin. Convenience method of @link #setHealthStatus(HealthStatus, String)
