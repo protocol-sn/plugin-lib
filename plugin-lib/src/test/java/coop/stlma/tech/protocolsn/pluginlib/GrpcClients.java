@@ -1,5 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib;
 
+import coop.stlma.tech.protocolsn.nodemanager.RegistrationGrpc;
 import io.grpc.ManagedChannel;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
@@ -19,5 +20,11 @@ public class GrpcClients {
     HealthGrpc.HealthFutureStub futureStub(
             @GrpcChannel(GrpcServerChannel.NAME) ManagedChannel channel) {
         return HealthGrpc.newFutureStub(channel);
+    }
+
+    @Bean
+    RegistrationGrpc.RegistrationBlockingStub registrationBlockingStub(
+            @GrpcChannel(GrpcServerChannel.NAME) ManagedChannel channel) {
+        return RegistrationGrpc.newBlockingStub(channel);
     }
 }

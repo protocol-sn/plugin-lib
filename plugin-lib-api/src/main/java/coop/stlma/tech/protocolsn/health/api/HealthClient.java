@@ -45,6 +45,16 @@ public class HealthClient {
     }
 
     /**
+     * Create instance of health client
+     * @param channel   Channel to create the client on
+     * @param executor  executor on which the client runs
+     * @return          Singleton instance of this client
+     */
+    public static HealthClient create(ManagedChannel channel, Executor executor) {
+        return new HealthClient(channel, executor);
+    }
+
+    /**
      * Close the channel
      */
     public void closeChannel() {
