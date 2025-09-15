@@ -4,3 +4,12 @@ coop:
       protocolsn:
         registration:
           on-startup: false
+
+
+grpc:
+  server:
+    port: 8090
+  channels:
+    node-manager:
+      target: "localhost:8090"
+      plaintext: true

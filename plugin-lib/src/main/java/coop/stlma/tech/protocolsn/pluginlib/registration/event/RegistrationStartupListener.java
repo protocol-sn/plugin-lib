@@ -1,7 +1,6 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.event;
 
-import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
-import coop.stlma.tech.protocolsn.pluginlib.health.config.HealthConfigurationProperties;
+import coop.stlma.tech.protocolsn.nodemanager.PluginRegistration;
 import coop.stlma.tech.protocolsn.pluginlib.registration.service.RegistrationService;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.annotation.Value;
@@ -27,17 +26,14 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
     private final String pluginName;
     private final String pluginHost;
     private final int pluginGrpcPort;
-    private final HealthConfigurationProperties healthConfigurationProperties;
 
     public RegistrationStartupListener(RegistrationService registrationService,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-name:}") String pluginName,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-host:}") String pluginHost,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-grpc-port:}") String pluginGrpcPort,
-                                       EmbeddedServer embeddedServer,
-                                       HealthConfigurationProperties healthConfigurationProperties) {
+                                       EmbeddedServer embeddedServer) {
         this.registrationService = registrationService;
         this.pluginName = pluginName;
-        this.healthConfigurationProperties = healthConfigurationProperties;
         this.pluginHost = StringUtils.isNotEmpty(pluginHost) ? pluginHost : String.valueOf(embeddedServer.getURL());
         this.pluginGrpcPort = StringUtils.isDigits(pluginGrpcPort) ? Integer.parseInt(pluginGrpcPort) : 0;
     }
@@ -49,9 +45,11 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
         log.debug("Registering plugin {} on {} and port {}", pluginName, pluginHost, pluginGrpcPort);
-        registrationService.register(new PluginRegistration(null,
-                pluginName, pluginHost, pluginGrpcPort, null,
-                null, null, null, null))
+        registrationService.register(PluginRegistration.newBuilder()
+                .setPluginName(pluginName)
+                .setPluginLocation(pluginHost)
+                .setPluginGrpcPort(pluginGrpcPort)
+                .build())
                 .block();
     }
 }

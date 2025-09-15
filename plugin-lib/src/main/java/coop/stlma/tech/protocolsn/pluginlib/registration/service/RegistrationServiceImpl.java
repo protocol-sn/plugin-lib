@@ -1,7 +1,7 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
-import coop.stlma.tech.protocolsn.nodemanager.registration.api.RegistrationClient;
-import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
+import coop.stlma.tech.protocolsn.nodemanager.PluginRegistration;
+import coop.stlma.tech.protocolsn.nodemanager.registration.RegistrationClient;
 import coop.stlma.tech.protocolsn.pluginlib.registration.error.PluginRegistrationException;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +34,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public Mono<PluginRegistration> register(PluginRegistration pluginRegistration) {
         log.debug("Registering plugin {}", pluginRegistration.getPluginName());
-        return Mono.from(registrationClient.registerPlugin(pluginRegistration))
-                .map(response -> response.getBody(PluginRegistration.class))
-                .map(body -> body.orElseThrow(() -> new PluginRegistrationException("Failed to register plugin.")));
+        return Mono.from(registrationClient.registerPlugin(pluginRegistration));
     }
 }

@@ -1,6 +1,7 @@
 package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
-import coop.stlma.tech.protocolsn.nodemanager.registration.model.PluginRegistration;
+
+import coop.stlma.tech.protocolsn.nodemanager.PluginRegistration;
 import reactor.core.publisher.Mono;
 
 /**
