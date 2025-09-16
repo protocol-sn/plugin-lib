@@ -25,17 +25,19 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
     private final RegistrationService registrationService;
     private final String pluginName;
     private final String pluginHost;
-    private final int pluginGrpcPort;
+    private final Integer pluginGrpcPort;
+    private final String pluginTarget;
 
     public RegistrationStartupListener(RegistrationService registrationService,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-name:}") String pluginName,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-host:}") String pluginHost,
                                        @Value("${coop.stlma.tech.protocolsn.plugin-grpc-port:}") String pluginGrpcPort,
-                                       EmbeddedServer embeddedServer) {
+                                       @Value("${coop.stlma.tech.protocolsn.plugin-target:}") String pluginTarget) {
         this.registrationService = registrationService;
         this.pluginName = pluginName;
-        this.pluginHost = StringUtils.isNotEmpty(pluginHost) ? pluginHost : String.valueOf(embeddedServer.getURL());
-        this.pluginGrpcPort = StringUtils.isDigits(pluginGrpcPort) ? Integer.parseInt(pluginGrpcPort) : 0;
+        this.pluginHost = StringUtils.isNotEmpty(pluginHost) ? pluginHost : null;
+        this.pluginGrpcPort = StringUtils.isDigits(pluginGrpcPort) ? Integer.parseInt(pluginGrpcPort) : null;
+        this.pluginTarget = StringUtils.isNotEmpty(pluginTarget) ? pluginTarget : null;
     }
 
     /**
@@ -45,11 +47,18 @@ public class RegistrationStartupListener implements ApplicationEventListener<App
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
         log.debug("Registering plugin {} on {} and port {}", pluginName, pluginHost, pluginGrpcPort);
-        registrationService.register(PluginRegistration.newBuilder()
-                .setPluginName(pluginName)
-                .setPluginLocation(pluginHost)
-                .setPluginGrpcPort(pluginGrpcPort)
-                .build())
+
+        PluginRegistration.Builder builder = PluginRegistration.newBuilder()
+                        .setPluginName(pluginName);
+
+        if (StringUtils.isNotEmpty(pluginTarget)) {
+            builder.setPluginTarget(pluginTarget);
+        }
+        else {
+            builder.setPluginLocation(pluginHost);
+            builder.setPluginGrpcPort(pluginGrpcPort);
+        }
+        registrationService.register(builder.build())
                 .block();
     }
 }
