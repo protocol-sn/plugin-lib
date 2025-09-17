@@ -28,4 +28,17 @@ class RegistrationServiceImplTest {
         Assertions.assertEquals("localhost", result.getPluginLocation());
         Assertions.assertEquals(8081, result.getPluginGrpcPort());
     }
+
+    @Test
+    void testRegister_target() {
+        PluginRegistration pluginRegistration = PluginRegistration.newBuilder()
+                .setId(UUID.nameUUIDFromBytes("test".getBytes()).toString())
+                .setPluginName("test")
+                .setPluginTarget("http://localhost:8081")
+                .build();
+        PluginRegistration result = registrationService.register(pluginRegistration).block();
+        Assertions.assertEquals("test", result.getPluginName());
+        Assertions.assertEquals("http://localhost:8081", result.getPluginTarget());
+
+    }
 }

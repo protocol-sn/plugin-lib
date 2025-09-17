@@ -46,6 +46,19 @@ public class HealthClient {
 
     /**
      * Create instance of health client
+     * @param target    Remote target of the grpc server e.g. http://host:port
+     * @param executor  executor on which the client runs
+     * @return          Singleton instance of this client
+     */
+    public static HealthClient create(String target, Executor executor) {
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
+                .usePlaintext()
+                .build();
+        return new HealthClient(channel, executor);
+    }
+
+    /**1
+     * Create instance of health client
      * @param channel   Channel to create the client on
      * @param executor  executor on which the client runs
      * @return          Singleton instance of this client

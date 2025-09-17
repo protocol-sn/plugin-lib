@@ -36,4 +36,24 @@ class RegistrationStartupListenerTest {
         Assertions.assertEquals(8080, result.getPluginGrpcPort());
 
     }
+
+    @Test
+    void testInit_target() {
+        RegistrationStartupListener registrationStartupListener = new RegistrationStartupListener(
+                registrationServiceMock,
+                "TestPlugin",
+                null,
+                null,
+                "http://localhost:8080");
+
+        Mockito.when(registrationServiceMock.register(registrationArgumentCaptor.capture()))
+                .thenReturn(Mono.just(PluginRegistration.newBuilder().build()));
+
+        registrationStartupListener.onApplicationEvent(null);
+
+        PluginRegistration result = registrationArgumentCaptor.getValue();
+
+        Assertions.assertEquals("http://localhost:8080", result.getPluginTarget());
+
+    }
 }

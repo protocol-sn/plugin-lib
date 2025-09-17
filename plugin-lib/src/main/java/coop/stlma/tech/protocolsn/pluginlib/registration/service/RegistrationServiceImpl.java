@@ -2,7 +2,6 @@ package coop.stlma.tech.protocolsn.pluginlib.registration.service;
 
 import coop.stlma.tech.protocolsn.nodemanager.PluginRegistration;
 import coop.stlma.tech.protocolsn.nodemanager.registration.RegistrationClient;
-import coop.stlma.tech.protocolsn.pluginlib.registration.error.PluginRegistrationException;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
